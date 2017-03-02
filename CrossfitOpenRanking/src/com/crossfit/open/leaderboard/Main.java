@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.print.attribute.standard.DialogTypeSelection;
+
 import org.apache.commons.io.IOUtils;
 
 import com.crossfit.open.leaderboard.comparators.ComparatorWodOne;
@@ -123,9 +125,18 @@ public class Main {
 		
 		recalculateWodScore(athletesList, 0);	
 		
+		Athlete lastAthlete = new Athlete();
+		
 		System.out.println("----------------------------------------------------------");
 		for (Athlete a : athletesList) {
-			System.out.println(a);
+			if(a.name.equals(lastAthlete.name)){
+				//System.out.println("REPETIU: " + a.toString());
+			}
+			else{ // Evitando repetidos
+				System.out.println(a);
+			}
+			
+			lastAthlete = a;
 		}
 		
 	}
@@ -160,11 +171,16 @@ public class Main {
 		unaffiliated.add("Aaron Damasceno");
 		unaffiliated.add("Anderson Diniz");
 		unaffiliated.add("Sales Wallace");
+		
 		unaffiliated.add("Daniel Costa");
+		unaffiliated.add("Luiz Fernando");
+		unaffiliated.add("Marcos Silva");
+		unaffiliated.add("Luiz Henrique Monteiro");
+		unaffiliated.add("Amanda Guerra");
+		unaffiliated.add("Rafael Miguel");
+		unaffiliated.add("Rafael Andrade");
 		unaffiliated.add("Antonio Bezerra Neto");
 		unaffiliated.add("Arnaud Duarte");
-		unaffiliated.add("Amanda Guerra");
-		unaffiliated.add("Marcos Silva");
 		
 		return unaffiliated;
 	}
