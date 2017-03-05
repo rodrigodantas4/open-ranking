@@ -9,6 +9,10 @@ public class Score {
     public String video;
     public ScoreDetail scoredetails;
 
+    @Override
+    public String toString() {
+    	return workoutrank + " (" + scoredisplay + ")";
+    }
     
     @Override
 	public boolean equals(Object obj) {
