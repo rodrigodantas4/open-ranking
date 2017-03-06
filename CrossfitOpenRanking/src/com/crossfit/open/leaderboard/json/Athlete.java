@@ -53,6 +53,6 @@ public class Athlete implements Comparable<Athlete>{
 
 	@Override
 	public int compareTo(Athlete o) {
-		return new Integer(this.overallrank).compareTo(new Integer(o.overallrank));
+		return new Integer(this.getOverallScoreRecalculated()).compareTo(new Integer(o.getOverallScoreRecalculated()));
 	}
 }
