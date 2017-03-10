@@ -21,6 +21,7 @@ import com.crossfit.open.leaderboard.comparators.ComparatorWodTwo;
 import com.crossfit.open.leaderboard.json.Athlete;
 import com.crossfit.open.leaderboard.json.Leaderboard;
 import com.crossfit.open.leaderboard.json.Score;
+import com.crossfit.open.leaderboard.json.ScoreDetail;
 import com.google.gson.Gson;
 
 public class Main {
@@ -31,29 +32,12 @@ public class Main {
 	private static final int WOD_FOUR_INDEX = 3;
 	private static final int WOD_FIVE_INDEX = 4;
 	
-	public static final String ALL      = "0";
-	public static final String MAN      = "1";
-	public static final String MAN14_15 = "14";
-	public static final String MAN16_17 = "16";
-	public static final String MAN35_39 = "18";
-	public static final String MAN40_44 = "12";
-	public static final String MAN45_49 = "3";
-	public static final String MAN50_54 = "5";
-	public static final String MAN55_59 = "7";
-	public static final String MAN60    = "9";
-	public static final String WOMAN    = "2";
-	public static final String WOMAN14_15 = "15";
-	public static final String WOMAN16_17 = "17";
-	public static final String WOMAN35_39 = "19";
-	public static final String WOMAN40_44 = "13";
-	public static final String WOMAN45_49 = "4";
-	public static final String WOMAN50_54 = "6";
-	public static final String WOMAN55_59 = "8";
-	public static final String WOMAN60    = "10";
 	
 	private static List<String> allCategory = new ArrayList<String>();
 	private static List<String> menCategory = new ArrayList<String>();
 	private static List<String> womenCategory = new ArrayList<String>();
+	private static List<String> mastersMenCategory = new ArrayList<String>();
+	private static List<String> mastersWomenCategory = new ArrayList<String>();
 	
 	
 	public static void main(String[] args) throws Exception {
@@ -87,15 +71,21 @@ public class Main {
 		List<String> athletesToNotRemove = setUpUnaffiliateds();
 		removeAthletesFromAffiliated(allAthletes, athletesToNotRemove, "CROSSFIT CANGACO");
 		
+		//MOMENTO NICE GUY DO ANO
+		//Espaço reservado para gambiarra pro jovem forever alone
+		
+		
 //		generateRanking(allAthletes, allCategory);
 		generateRanking(allAthletes, menCategory);
 		generateRanking(allAthletes, womenCategory);
+		generateRanking(allAthletes, mastersWomenCategory);
+		generateRanking(allAthletes, mastersMenCategory);
 	}
 
 	private static void generateRanking(List<Athlete> allAthletes, List<String> rankCategory) {
 		List<Athlete> athletesList;
 		
-		if (rankCategory.contains(ALL)) {
+		if (rankCategory.contains(Athlete.ALL)) {
 			athletesList = new ArrayList<Athlete>(allAthletes);
 			
 		} else {
@@ -188,7 +178,7 @@ public class Main {
 
 	private static void printRanking(List<Athlete> athletesList) {
 		System.out.println("----------------------------------------------------------");
-		System.out.println("Posição \tNome \tPontuação \t17.1 \t17.2 \t17.3 \t17.4 \t17.5 \tBox \tAtualizado em: " + new SimpleDateFormat("dd/MM/yy - HH:mm").format(Calendar.getInstance().getTime()));
+		System.out.println("Posição \tNome \tPontuação \t17.1 \t17.2 \t17.3 \t17.4 \t17.5 \tCategoria \tBox \tAtualizado em: " + new SimpleDateFormat("dd/MM/yy - HH:mm").format(Calendar.getInstance().getTime()));
 		
 		for (Athlete a : athletesList) {
 			System.out.println(a);
@@ -224,28 +214,42 @@ public class Main {
 	}
 	
 	private static void setUpRankingCategories() {
-		menCategory.add(MAN);
-		menCategory.add(MAN35_39);
-		menCategory.add(MAN14_15);
-		menCategory.add(MAN16_17);
-		menCategory.add(MAN35_39);
-		menCategory.add(MAN40_44);
-		menCategory.add(MAN45_49);
-		menCategory.add(MAN50_54);
-		menCategory.add(MAN55_59);
-		menCategory.add(MAN60);
+		menCategory.add(Athlete.MAN);
+		menCategory.add(Athlete.MAN35_39);
+		menCategory.add(Athlete.MAN14_15);
+		menCategory.add(Athlete.MAN16_17);
+		menCategory.add(Athlete.MAN35_39);
+		menCategory.add(Athlete.MAN40_44);
+		menCategory.add(Athlete.MAN45_49);
+		menCategory.add(Athlete.MAN50_54);
+		menCategory.add(Athlete.MAN55_59);
+		menCategory.add(Athlete.MAN60);
 		
-		womenCategory.add(WOMAN);
-		womenCategory.add(WOMAN14_15);
-		womenCategory.add(WOMAN16_17);
-		womenCategory.add(WOMAN35_39);
-		womenCategory.add(WOMAN40_44);
-		womenCategory.add(WOMAN45_49);
-		womenCategory.add(WOMAN50_54);
-		womenCategory.add(WOMAN55_59);
-		womenCategory.add(WOMAN60   );
+		womenCategory.add(Athlete.WOMAN);
+		womenCategory.add(Athlete.WOMAN14_15);
+		womenCategory.add(Athlete.WOMAN16_17);
+		womenCategory.add(Athlete.WOMAN35_39);
+		womenCategory.add(Athlete.WOMAN40_44);
+		womenCategory.add(Athlete.WOMAN45_49);
+		womenCategory.add(Athlete.WOMAN50_54);
+		womenCategory.add(Athlete.WOMAN55_59);
+		womenCategory.add(Athlete.WOMAN60   );
+
+		mastersWomenCategory.add(Athlete.WOMAN35_39);
+		mastersWomenCategory.add(Athlete.WOMAN40_44);
+		mastersWomenCategory.add(Athlete.WOMAN45_49);
+		mastersWomenCategory.add(Athlete.WOMAN50_54);
+		mastersWomenCategory.add(Athlete.WOMAN55_59);
+		mastersWomenCategory.add(Athlete.WOMAN60   );
 		
-		allCategory.add(ALL);
+		mastersMenCategory.add(Athlete.MAN35_39);
+		mastersMenCategory.add(Athlete.MAN40_44);
+		mastersMenCategory.add(Athlete.MAN45_49);
+		mastersMenCategory.add(Athlete.MAN50_54);
+		mastersMenCategory.add(Athlete.MAN55_59);
+		mastersMenCategory.add(Athlete.MAN60);
+		
+		allCategory.add(Athlete.ALL);
 	}
 
 	private static List<String> setUpUnaffiliateds(){
@@ -273,5 +277,31 @@ public class Main {
 			a.affiliate = affiliates.get(a.affiliateid);
 		}
 	}
+	
+	/*private static void addForeverAlone(){
+		List<Score> scoresForeverAlone = new ArrayList<Score>();
+		scoresForeverAlone.add(new Score("","192 reps", "", "", "", new ScoreDetail()));
+		scoresForeverAlone.add("0");
+		scoresForeverAlone.add("--");
+		scoresForeverAlone.add("--");
+		scoresForeverAlone.add("--");
+		Athlete foreverAlone = new Athlete( "397455",
+											"Luiz Fernando",
+											"8",
+											"0",
+											"2",
+											"",
+											"38",
+											"Latin America",
+											"",
+											"",
+											"",
+											"0",
+											"",
+											"",
+											"",
+											scoresForeverAlone);
+		allAthletes.add();
+	}*/
 	
 }
