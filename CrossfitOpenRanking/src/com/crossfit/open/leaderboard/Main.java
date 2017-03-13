@@ -21,7 +21,6 @@ import com.crossfit.open.leaderboard.comparators.ComparatorWodTwo;
 import com.crossfit.open.leaderboard.json.Athlete;
 import com.crossfit.open.leaderboard.json.Leaderboard;
 import com.crossfit.open.leaderboard.json.Score;
-import com.crossfit.open.leaderboard.json.ScoreDetail;
 import com.google.gson.Gson;
 
 public class Main {
@@ -32,13 +31,11 @@ public class Main {
 	private static final int WOD_FOUR_INDEX = 3;
 	private static final int WOD_FIVE_INDEX = 4;
 	
-	
 	private static List<String> allCategory = new ArrayList<String>();
 	private static List<String> menCategory = new ArrayList<String>();
 	private static List<String> womenCategory = new ArrayList<String>();
 	private static List<String> mastersMenCategory = new ArrayList<String>();
 	private static List<String> mastersWomenCategory = new ArrayList<String>();
-	
 	
 	public static void main(String[] args) throws Exception {
 		Gson gson = new Gson();
@@ -78,8 +75,8 @@ public class Main {
 //		generateRanking(allAthletes, allCategory);
 		generateRanking(allAthletes, menCategory);
 		generateRanking(allAthletes, womenCategory);
-		generateRanking(allAthletes, mastersWomenCategory);
 		generateRanking(allAthletes, mastersMenCategory);
+		generateRanking(allAthletes, mastersWomenCategory);
 	}
 
 	private static void generateRanking(List<Athlete> allAthletes, List<String> rankCategory) {
@@ -100,7 +97,7 @@ public class Main {
 		
 		recalculateWodScore(athletesList, WOD_ONE_INDEX);
 		recalculateWodScore(athletesList, WOD_TWO_INDEX);
-//		recalculateWodScore(athletesList, WOD_THREE_INDEX);
+		recalculateWodScore(athletesList, WOD_THREE_INDEX);
 //		recalculateWodScore(athletesList, WOD_FOUR_INDEX);
 //		recalculateWodScore(athletesList, WOD_FIVE_INDEX);
 		
