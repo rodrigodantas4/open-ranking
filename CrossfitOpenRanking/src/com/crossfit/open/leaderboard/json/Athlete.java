@@ -9,6 +9,7 @@ public class Athlete implements Comparable<Athlete>{
 	public String regionid;
 	public String affiliateid;
 	public String divisionid;
+	public String divisionDisplay;
 	public int highlight;
 	public int age;
 	public String region;
@@ -34,6 +35,7 @@ public class Athlete implements Comparable<Athlete>{
     		overallScoreRecalculated += wodScore;
 		}
     	
+    	this.overallscore = Integer.toString(overallScoreRecalculated);
     	return overallScoreRecalculated;
     }
 
