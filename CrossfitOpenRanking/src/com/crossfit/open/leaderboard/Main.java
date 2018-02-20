@@ -64,12 +64,10 @@ public class Main {
 		}
 		
 		fillAffiliatesName(allAthletes, affiliates);
+		fillCategoriesNames(allAthletes);
 		
 		List<String> athletesToNotRemove = setUpUnaffiliateds();
 		removeAthletesFromAffiliated(allAthletes, athletesToNotRemove, "CROSSFIT CANGACO");
-		
-		//MOMENTO NICE GUY DO ANO
-		//Espaço reservado para gambiarra pro jovem forever alone
 		
 		
 //		generateRanking(allAthletes, allCategory);
@@ -77,6 +75,12 @@ public class Main {
 		generateRanking(allAthletes, womenCategory);
 		generateRanking(allAthletes, mastersMenCategory);
 		generateRanking(allAthletes, mastersWomenCategory);
+	}
+
+	private static void fillCategoriesNames(List<Athlete> allAthletes) {
+		for (Athlete a : allAthletes) {
+			a.divisionDisplay = a.getDivisionString(a.divisionid);
+		}
 	}
 
 	private static void generateRanking(List<Athlete> allAthletes, List<String> rankCategory) {
@@ -98,14 +102,14 @@ public class Main {
 		recalculateWodScore(athletesList, WOD_ONE_INDEX);
 		recalculateWodScore(athletesList, WOD_TWO_INDEX);
 		recalculateWodScore(athletesList, WOD_THREE_INDEX);
-//		recalculateWodScore(athletesList, WOD_FOUR_INDEX);
-//		recalculateWodScore(athletesList, WOD_FIVE_INDEX);
+		recalculateWodScore(athletesList, WOD_FOUR_INDEX);
+		recalculateWodScore(athletesList, WOD_FIVE_INDEX);
 		
 		recalculateOverallRanking(athletesList);
 		
 		printRanking(athletesList);
 	}
-
+	
 
 	private static void recalculateWodScore(List<Athlete> allAthletes, int wodIndex) {
 		ComparatorWod comparator;
