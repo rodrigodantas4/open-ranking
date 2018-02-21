@@ -1,38 +1,42 @@
 package com.openleaderboard.apiv3;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 
 import com.google.gson.Gson;
 import com.openleaderboard.apiv3.json.Leaderboard;
+import com.openleaderboard.apiv3.json.LeaderboardRows;
 
 public class Main {
 
 	public static void main(String[] args) throws Exception {
 		Gson gson = new Gson();
+		List<LeaderboardRows> athletes = new ArrayList<LeaderboardRows>();
 //		List<Athlete> allAthletes = new ArrayList<Athlete>();
 				
 		Map<String, String> affiliatesMap = loadAffiliates();
 //		setUpRankingCategories();
 		
 		//"https://games.crossfit.com/competitions/api/v1/competitions/open/2018/leaderboards?affiliate=15671&division=2&&page=1"
-		//:affiliateId
-		//:divisionId
-		//:pageNumber
+		//Parameters - :affiliateId, :divisionId, :pageNumber
 		String urlBase = "https://games.crossfit.com/competitions/api/v1/competitions/open/2018/leaderboards?affiliate=:affiliateId&division=:divisionId&page=:pageNumber";
 		
 		for (String affiliateId : affiliatesMap.keySet()) {
-			int page = 1;
-			String divisionId = "1";
-			String url = buildURL(urlBase, affiliateId, divisionId , page);
-			System.out.println("Processing: " + url);
-
-			Leaderboard leaderboard = gson.fromJson(IOUtils.toString(new URL(url), "UTF-8"), Leaderboard.class);
-//			allAthletes.addAll(leaderboard.athletes);
-			
+			for (DivisionType division : DivisionType.values()) {
+				int page = 1;
+				String url = buildURL(urlBase, affiliateId, division.id() , page);
+				System.out.println("Processing: " + url);
+				
+				Leaderboard leaderboard = gson.fromJson(IOUtils.toString(new URL(url), "UTF-8"), Leaderboard.class);
+				athletes.addAll(leaderboard.getLeaderboardRows());
+				
+//				allAthletes.addAll(leaderboard.athletes);
+				
 //			for (page = 2; page <= leaderboard.totalpages; page++) {
 //				String url = buildURL(urlBase, affiliateId, divisionId , page);
 ////				System.out.println("Processando: " + url);
@@ -40,6 +44,8 @@ public class Main {
 //				leaderboard = gson.fromJson(IOUtils.toString(new URL(url), "UTF-8"), Leaderboard.class);
 //				allAthletes.addAll(leaderboard.athletes);
 //			}
+				
+			}
 		}
 		
 //		List<String> athletesToNotRemove = setUpUnaffiliateds();

@@ -1,5 +1,7 @@
 package com.openleaderboard.apiv3.json;
 
+import java.util.List;
+
 public class Leaderboard {
 	private String cacheKey;
 
@@ -9,7 +11,7 @@ public class Leaderboard {
 
 	private String query;
 
-	private LeaderboardRows[] leaderboardRows;
+	private List<LeaderboardRows> leaderboardRows;
 
 	private Ordinals[] ordinals;
 
@@ -51,11 +53,11 @@ public class Leaderboard {
 		this.query = query;
 	}
 
-	public LeaderboardRows[] getLeaderboardRows() {
+	public List<LeaderboardRows> getLeaderboardRows() {
 		return leaderboardRows;
 	}
 
-	public void setLeaderboardRows(LeaderboardRows[] leaderboardRows) {
+	public void setLeaderboardRows(List<LeaderboardRows> leaderboardRows) {
 		this.leaderboardRows = leaderboardRows;
 	}
 
