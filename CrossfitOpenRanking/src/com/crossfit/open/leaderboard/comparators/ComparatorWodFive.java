@@ -17,7 +17,21 @@ public class ComparatorWodFive extends ComparatorWod {
 			return initialComparison;
 		}
 		
-		return compareReps(a1, a2, score1, score2, WOD_INDEX);
+		if (isScoreWithReps(score1)) {
+			if (isScoreWithReps(score2)) {
+				return compareReps(a1, a2, score1, score2, WOD_INDEX);
+				
+			} else { //score with time
+				return 1; //time better than reps
+			}
+			
+		} else { //score has time
+			if (isScoreWithReps(score2)) {
+				return -1; //time better than reps
+			} else {
+				return score1.compareTo(score2); //compare time
+			}
+		}
 	}
 	
 }
