@@ -1,5 +1,8 @@
 package com.openleaderboard.apiv3;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,10 +33,15 @@ public class Main {
 	private static List<String> womenCategory = new ArrayList<String>();
 	private static List<String> mastersMenCategory = new ArrayList<String>();
 	private static List<String> mastersWomenCategory = new ArrayList<String>();
+	private static List<String> teenMenCategory = new ArrayList<String>();
+	private static List<String> teenWomenCategory = new ArrayList<String>();
 	
+	private static Gson gson = new Gson();
 	
 	public static void main(String[] args) throws Exception {
-		Gson gson = new Gson();
+//		System.setProperty("https.proxyHost", "localhost");
+//		System.setProperty("https.proxyPort", "5865");
+		
 		List<LeaderboardRows> athletes = new ArrayList<LeaderboardRows>();
 				
 		Map<String, String> affiliatesMap = loadAffiliates();
@@ -66,7 +74,6 @@ public class Main {
 						athletes.addAll(leaderboard.getLeaderboardRows());
 					}
 				}
-				
 			}
 		}
 		
@@ -74,10 +81,20 @@ public class Main {
 		//TODO is there api?
 		
 		
-		generateRanking(athletes, menCategory);
-		generateRanking(athletes, womenCategory);
-//		generateRanking(allAthletes, mastersMenCategory);
-//		generateRanking(allAthletes, mastersWomenCategory);
+		fillDivisionDisplay(athletes);
+		
+		generateRanking(athletes, menCategory, "masc.json");
+		generateRanking(athletes, womenCategory, "fem.json");
+		generateRanking(athletes, mastersMenCategory, "master_masc.json");
+		generateRanking(athletes, mastersWomenCategory, "master_fem.json");
+		generateRanking(athletes, teenMenCategory, "teen_masc.json");
+		generateRanking(athletes, teenWomenCategory, "teen_fem.json");		
+	}
+
+	private static void fillDivisionDisplay(List<LeaderboardRows> athletes) {
+		for (LeaderboardRows a : athletes) {
+			a.getEntrant().setDivisionDisplay(a.getEntrant().getDivisionDisplay());
+		}
 	}
 
 	private static void setUpRankingCategories() {
@@ -116,9 +133,15 @@ public class Main {
 			mastersMenCategory.add(DivisionType.MAN55_59.id());
 			mastersMenCategory.add(DivisionType.MAN60.id());
 			
+			
+			teenMenCategory.add(DivisionType.MAN14_15.id());
+			teenMenCategory.add(DivisionType.MAN16_17.id());
+			
+			teenWomenCategory.add(DivisionType.WOMAN14_15.id());
+			teenWomenCategory.add(DivisionType.WOMAN16_17.id());
 	}
 	
-	private static void generateRanking(List<LeaderboardRows> athletes, List<String> category) {
+	private static void generateRanking(List<LeaderboardRows> athletes, List<String> category, String filename) throws Exception {
 		List<LeaderboardRows> athletesList;
 		
 		athletesList = new ArrayList<LeaderboardRows>();
@@ -138,7 +161,16 @@ public class Main {
 		recalculateOverallScore(athletesList);
 		recalculateOverallRanking(athletesList);
 		
-		printRanking(athletesList);
+		
+		Leaderboard l = new Leaderboard();
+		l.setLeaderboardRows(athletesList);
+		
+		BufferedWriter w = new BufferedWriter(new FileWriter(new File(filename)));
+		
+		w.write(gson.toJson(l, l.getClass()));
+		w.close();
+		
+//		printRanking(athletesList);
 	}
 	
 	private static void printRanking(List<LeaderboardRows> athletesList) {
