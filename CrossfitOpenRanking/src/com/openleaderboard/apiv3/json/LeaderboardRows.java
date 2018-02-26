@@ -1,7 +1,9 @@
 package com.openleaderboard.apiv3.json;
 
-public class LeaderboardRows {
-	private String overallScore;
+import java.util.List;
+
+public class LeaderboardRows implements Comparable<LeaderboardRows>{
+	private int overallScore;
 
 	private Ui ui;
 
@@ -9,15 +11,15 @@ public class LeaderboardRows {
 
 	private String nextStage;
 
-	private Scores[] scores;
+	private List<Scores> scores;
 
 	private String overallRank;
 
-	public String getOverallScore() {
+	public int getOverallScore() {
 		return overallScore;
 	}
 
-	public void setOverallScore(String overallScore) {
+	public void setOverallScore(int overallScore) {
 		this.overallScore = overallScore;
 	}
 
@@ -45,11 +47,11 @@ public class LeaderboardRows {
 		this.nextStage = nextStage;
 	}
 
-	public Scores[] getScores() {
+	public List<Scores> getScores() {
 		return scores;
 	}
 
-	public void setScores(Scores[] scores) {
+	public void setScores(List<Scores> scores) {
 		this.scores = scores;
 	}
 
@@ -61,11 +63,31 @@ public class LeaderboardRows {
 		this.overallRank = overallRank;
 	}
 
+//	@Override
+//	public String toString() {
+//		return "ClassPojo [overallScore = " + overallScore + ", ui = " + ui
+//				+ ", entrant = " + entrant + ", nextStage = " + nextStage
+//				+ ", scores = " + scores + ", overallRank = " + overallRank
+//				+ "]";
+//	}
+	
 	@Override
-	public String toString() {
-		return "ClassPojo [overallScore = " + overallScore + ", ui = " + ui
-				+ ", entrant = " + entrant + ", nextStage = " + nextStage
-				+ ", scores = " + scores + ", overallRank = " + overallRank
-				+ "]";
+    public String toString() {
+    	return  overallRank
+    			+ "\t" + getEntrant().getCompetitorName()
+    			+ "\t" + overallScore
+    			+ "\t" + scores.get(0).getScoreDisplay()
+    			+ "\t" + ""
+    			+ "\t" + ""
+    			+ "\t" + ""
+    			+ "\t" + ""
+    			+ "\t" + getEntrant().getDivisionDisplay()
+    			+ "\t" + getEntrant().getAffiliateName();
+    }
+
+	@Override
+	public int compareTo(LeaderboardRows o) {
+		return new Integer(this.overallScore).compareTo(o.getOverallScore());
 	}
+	
 }

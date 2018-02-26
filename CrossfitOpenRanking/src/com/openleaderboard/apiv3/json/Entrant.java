@@ -1,5 +1,7 @@
 package com.openleaderboard.apiv3.json;
 
+import com.crossfit.open.leaderboard.json.Athlete;
+
 public class Entrant {
 	private String lastName;
 
@@ -28,6 +30,8 @@ public class Entrant {
 	private String competitorName;
 
 	private String divisionId;
+	
+	private String divisionDisplay;
 
 	private String age;
 
@@ -216,4 +220,51 @@ public class Entrant {
 				+ ", bibId = " + bibId + ", regionalCode = " + regionalCode
 				+ ", regionId = " + regionId + "]";
 	}
+
+	public void setDivisionDisplay(String divisionDisplay) {
+		this.divisionDisplay = divisionDisplay;
+	}
+	
+	public String getDivisionDisplay(){
+    	switch (this.divisionId) {
+	    	case MAN:        return "Masculino";
+	    	case MAN14_15  : return "Teen 14-15";
+	    	case MAN16_17  : return "Teen 16-17";
+	    	case MAN35_39  : return "Masters 35-39";
+	    	case MAN40_44  : return "Masters 40-44";
+	    	case MAN45_49  : return "Masters 45-49";
+	    	case MAN50_54  : return "Masters 50-54";
+	    	case MAN55_59  : return "Masters 55-59";
+	    	case MAN60     : return "Masters 60";
+	    	case WOMAN     : return "Feminino";
+	    	case WOMAN14_15: return "Teen 14-15";
+	    	case WOMAN16_17: return "Teen 16-17";
+	    	case WOMAN35_39: return "Masters 35-39";
+	    	case WOMAN40_44: return "Masters 40-44";
+	    	case WOMAN45_49: return "Masters 45-49";
+	    	case WOMAN50_54: return "Masters 50-54";
+	    	case WOMAN55_59: return "Masters 55-59";
+	    	case WOMAN60   : return "Masters 60";
+	    	default 	   : return "???";
+    	}
+    }
+    
+	public static final String MAN        = "1";
+	public static final String MAN14_15   = "14";
+	public static final String MAN16_17   = "16";
+	public static final String MAN35_39   = "18";
+	public static final String MAN40_44   = "12";
+	public static final String MAN45_49   = "3";
+	public static final String MAN50_54   = "5";
+	public static final String MAN55_59   = "7";
+	public static final String MAN60      = "9";
+	public static final String WOMAN      = "2";
+	public static final String WOMAN14_15 = "15";
+	public static final String WOMAN16_17 = "17";
+	public static final String WOMAN35_39 = "19";
+	public static final String WOMAN40_44 = "13";
+	public static final String WOMAN45_49 = "4";
+	public static final String WOMAN50_54 = "6";
+	public static final String WOMAN55_59 = "8";
+	public static final String WOMAN60    = "10";
 }
