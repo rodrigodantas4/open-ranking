@@ -50,11 +50,12 @@ public class Main {
 		//"https://games.crossfit.com/competitions/api/v1/competitions/open/2018/leaderboards?affiliate=15671&division=2&&page=1"
 		//Parameters - :affiliateId, :divisionId, :pageNumber
 		String urlBase = "https://games.crossfit.com/competitions/api/v1/competitions/open/2018/leaderboards?affiliate=:affiliateId&division=:divisionId&page=:pageNumber";
-		String urlIndividual = "https://games.crossfit.com/competitions/api/v1/competitions/open/2018/leaderboards?&athlete=:athleteId";
+
+//		String urlIndividual = "https://games.crossfit.com/competitions/api/v1/competitions/open/2018/leaderboards?&athlete=:athleteId";
+		String urlIndividual = "https://games.crossfit.com/competitions/api/v1/competitions/open/2018/leaderboards?division=:divisionId&athlete=:athleteId";
 		
 		//load athletes from affiliates
 		for (String affiliateId : affiliatesMap.keySet()) {
-//			for (DivisionType division : DivisionType.values()) {
 			for (int division = 1; division <= 2; division++) {
 				int page = 1;
 				String url = buildURL(urlBase, affiliateId, Integer.toString(division) , page);
@@ -79,12 +80,13 @@ public class Main {
 		}
 		
 			
-		//TODO load athletes not affiliated (individual)
+		//load athletes not affiliated (individual)
 		Map<String, String> unaffiliatedsMap = loadUnaffiliateds();
 		
 		for(String athleteId : unaffiliatedsMap.keySet()){
-			
-			String indyUrl = buildIndividualURL(urlIndividual, athleteId);
+			String divisionId = unaffiliatedsMap.get(athleteId);
+			String indyUrl = buildIndividualURL(urlIndividual, athleteId, divisionId);
+			System.out.println("Processing: " + indyUrl);
 			
 			Leaderboard leaderboardIndy = gson.fromJson(IOUtils.toString(new URL(indyUrl), "UTF-8"), Leaderboard.class);
 			int entrantIndex = 0;
@@ -97,10 +99,9 @@ public class Main {
 				}
 			}
 			LeaderboardRows row = leaderboardIndy.getLeaderboardRows().get(entrantIndex);
+			row.getEntrant().setAffiliateName("Unaffiliated");
 			athletes.add(row);
-			//TODO is there api?
 		}
-		
 		
 		fillDivisionDisplay(athletes);
 		
@@ -284,7 +285,6 @@ public class Main {
 	}
 
 	private static Map<String, String> loadAffiliates() {
-		// TODO carregar lista de afiliadas a partir de um arquivo
 		Map<String, String> affiliates = new HashMap<String, String>();
 		
 		affiliates.put("14372", "CrossFit Monster Factory");
@@ -305,15 +305,17 @@ public class Main {
 		// TODO carregar lista de afiliadas a partir de um arquivo
 		Map<String, String> unaffiliateds = new HashMap<String, String>();
 		
-		unaffiliateds.put("689593", "1");//,"Aaron Damasceno");
-		unaffiliateds.put("1226377", "1");//, "Bruno Lucena");
-		unaffiliateds.put("1330158", "1");//, "Marcel Vidal");
-		unaffiliateds.put("923747", "1");//, "Luiz Henrique Alverga");
-		unaffiliateds.put("1319593", "1");//, "Jucelino Silva");
-		unaffiliateds.put("1314287", "1");//, "FRANCISCO ROCHA");
-//		unaffiliateds.put("1278372", "2");//, "Raquel Farias");
-//		unaffiliateds.put("1278372", "Raquel Farias"); N�o encontra pela api
-		
+		unaffiliateds.put("689593",  DivisionType.MAN.id());	//Aaron Damasceno
+		unaffiliateds.put("915127",  DivisionType.MAN.id());	//João Aurílio Leiros
+		unaffiliateds.put("1226377", DivisionType.MAN.id());	//Bruno Lucena
+		unaffiliateds.put("1330158", DivisionType.MAN.id());	//Marcel Vidal
+		unaffiliateds.put("923747",  DivisionType.MAN.id());	//Luiz Henrique Alverga
+		unaffiliateds.put("1319593", DivisionType.MAN.id());	//Jucelino Silva
+		unaffiliateds.put("1314287", DivisionType.MAN.id());	//Francisco Rocha
+		unaffiliateds.put("901095",  DivisionType.MAN.id());	//Marcos Silva
+		unaffiliateds.put("718899",  DivisionType.MAN.id());	//Paulo Xavier Filho
+		unaffiliateds.put("1278372", DivisionType.WOMAN.id());	//Raquel Farias
+		unaffiliateds.put("1310220", DivisionType.WOMAN.id());	//Wriellen Oliveira
 		
 		return unaffiliateds;
 	}
@@ -323,12 +325,11 @@ public class Main {
 							.replace(":divisionId", divisionId)
 							.replace(":pageNumber", Integer.toString(page));
 		
-		return
-				url;
+		return url;
 	}
-	private static String buildIndividualURL(String urlBase, String athleteId) {
-		String url = urlBase.replace(":athleteId", athleteId);
-//						.replace(":division", division);
+	private static String buildIndividualURL(String urlBase, String athleteId, String divisionId) {
+		String url = urlBase.replace(":athleteId", athleteId)
+							.replace(":divisionId", divisionId);
 		
 		return url;
 	}
