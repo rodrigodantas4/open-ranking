@@ -50,6 +50,7 @@ public class Main {
 		//"https://games.crossfit.com/competitions/api/v1/competitions/open/2018/leaderboards?affiliate=15671&division=2&&page=1"
 		//Parameters - :affiliateId, :divisionId, :pageNumber
 		String urlBase = "https://games.crossfit.com/competitions/api/v1/competitions/open/2018/leaderboards?affiliate=:affiliateId&division=:divisionId&page=:pageNumber";
+		String urlIndividual = "https://games.crossfit.com/competitions/api/v1/competitions/open/2018/leaderboards?&athlete=:athleteId";
 		
 		//load athletes from affiliates
 		for (String affiliateId : affiliatesMap.keySet()) {
@@ -77,8 +78,28 @@ public class Main {
 			}
 		}
 		
+			
 		//TODO load athletes not affiliated (individual)
-		//TODO is there api?
+		Map<String, String> unaffiliatedsMap = loadUnaffiliateds();
+		
+		for(String athleteId : unaffiliatedsMap.keySet()){
+			
+			String indyUrl = buildIndividualURL(urlIndividual, athleteId);
+			
+			Leaderboard leaderboardIndy = gson.fromJson(IOUtils.toString(new URL(indyUrl), "UTF-8"), Leaderboard.class);
+			int entrantIndex = 0;
+			for(LeaderboardRows row : leaderboardIndy.getLeaderboardRows()){
+				if(row.getEntrant().getCompetitorId().equalsIgnoreCase(athleteId)){
+					break;
+				}
+				else{
+					entrantIndex++;
+				}
+			}
+			LeaderboardRows row = leaderboardIndy.getLeaderboardRows().get(entrantIndex);
+			athletes.add(row);
+			//TODO is there api?
+		}
 		
 		
 		fillDivisionDisplay(athletes);
@@ -280,10 +301,34 @@ public class Main {
 		return affiliates;
 	}
 
+	private static Map<String, String> loadUnaffiliateds() {
+		// TODO carregar lista de afiliadas a partir de um arquivo
+		Map<String, String> unaffiliateds = new HashMap<String, String>();
+		
+		unaffiliateds.put("689593", "1");//,"Aaron Damasceno");
+		unaffiliateds.put("1226377", "1");//, "Bruno Lucena");
+		unaffiliateds.put("1330158", "1");//, "Marcel Vidal");
+		unaffiliateds.put("923747", "1");//, "Luiz Henrique Alverga");
+		unaffiliateds.put("1319593", "1");//, "Jucelino Silva");
+		unaffiliateds.put("1314287", "1");//, "FRANCISCO ROCHA");
+//		unaffiliateds.put("1278372", "2");//, "Raquel Farias");
+//		unaffiliateds.put("1278372", "Raquel Farias"); Não encontra pela api
+		
+		
+		return unaffiliateds;
+	}
+
 	private static String buildURL(String urlBase, String affiliateId, String divisionId, int page) {
 		String url = urlBase.replace(":affiliateId", affiliateId)
 							.replace(":divisionId", divisionId)
 							.replace(":pageNumber", Integer.toString(page));
+		
+		return
+				url;
+	}
+	private static String buildIndividualURL(String urlBase, String athleteId) {
+		String url = urlBase.replace(":athleteId", athleteId);
+//						.replace(":division", division);
 		
 		return url;
 	}

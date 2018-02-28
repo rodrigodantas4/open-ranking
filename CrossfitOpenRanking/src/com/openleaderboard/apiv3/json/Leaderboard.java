@@ -60,7 +60,7 @@ public class Leaderboard {
 	public void setLeaderboardRows(List<LeaderboardRows> leaderboardRows) {
 		this.leaderboardRows = leaderboardRows;
 	}
-
+	
 	public Ordinals[] getOrdinals() {
 		return ordinals;
 	}
