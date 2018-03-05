@@ -15,7 +15,7 @@ import java.util.Map;
 import org.apache.commons.io.IOUtils;
 
 import com.google.gson.Gson;
-import com.openleaderboard.apiv3.comparators.ComparatorWodOne;
+import com.openleaderboard.apiv3.comparators.WodComparatorByScore;
 import com.openleaderboard.apiv3.comparators.LeaderboardRowComparator;
 import com.openleaderboard.apiv3.json.Leaderboard;
 import com.openleaderboard.apiv3.json.LeaderboardRows;
@@ -25,9 +25,10 @@ public class Main {
 
 	private static final int WOD_ONE_INDEX = 0;
 	private static final int WOD_TWO_INDEX = 1;
-	private static final int WOD_THREE_INDEX = 2;
-	private static final int WOD_FOUR_INDEX = 3;
-	private static final int WOD_FIVE_INDEX = 4;
+	private static final int WOD_TWO_A_INDEX = 2;
+	private static final int WOD_THREE_INDEX = 3;
+	private static final int WOD_FOUR_INDEX = 4;
+	private static final int WOD_FIVE_INDEX = 5;
 	
 	private static List<String> menCategory = new ArrayList<String>();
 	private static List<String> womenCategory = new ArrayList<String>();
@@ -175,7 +176,8 @@ public class Main {
 		}
 		
 		recalculateWodScore(athletesList, WOD_ONE_INDEX);
-//		recalculateWodScore(athletesList, WOD_TWO_INDEX);
+		recalculateWodScore(athletesList, WOD_TWO_INDEX);
+		recalculateWodScore(athletesList, WOD_TWO_A_INDEX);
 //		recalculateWodScore(athletesList, WOD_THREE_INDEX);
 //		recalculateWodScore(athletesList, WOD_FOUR_INDEX);
 //		recalculateWodScore(athletesList, WOD_FIVE_INDEX);
@@ -207,31 +209,7 @@ public class Main {
 	private static void recalculateWodScore(List<LeaderboardRows> allAthletes, int wodIndex) {
 		LeaderboardRowComparator comparator;
 		
-		switch (wodIndex) {
-			case WOD_ONE_INDEX:
-				comparator = new ComparatorWodOne();
-				break;
-				
-//			case WOD_TWO_INDEX:
-//				comparator = new ComparatorWodTwo();
-//				break;
-//			
-//			case WOD_THREE_INDEX:
-//				comparator = new ComparatorWodThree();
-//				break;
-//				
-//			case WOD_FOUR_INDEX:
-//				comparator = new ComparatorWodFour();
-//				break;
-//				
-//			case WOD_FIVE_INDEX:
-//				comparator = new ComparatorWodFive();
-//				break;
-				
-			default:
-				comparator = new ComparatorWodOne();
-				break;
-		}
+		comparator = new WodComparatorByScore(wodIndex);
 		
 		Collections.sort(allAthletes, comparator);
 		
@@ -302,7 +280,7 @@ public class Main {
 	}
 
 	private static Map<String, String> loadUnaffiliateds() {
-		// TODO carregar lista de afiliadas a partir de um arquivo
+		// TODO carregar lista de nao afiliadas a partir de um arquivo
 		Map<String, String> unaffiliateds = new HashMap<String, String>();
 		
 		unaffiliateds.put("689593",  DivisionType.MAN.id());	//Aaron Damasceno
