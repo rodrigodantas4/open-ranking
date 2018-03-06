@@ -40,8 +40,8 @@ public class Main {
 	private static Gson gson = new Gson();
 	
 	public static void main(String[] args) throws Exception {
-//		System.setProperty("https.proxyHost", "localhost");
-//		System.setProperty("https.proxyPort", "5865");
+		System.setProperty("https.proxyHost", "localhost");
+		System.setProperty("https.proxyPort", "5865");
 		
 		List<LeaderboardRows> athletes = new ArrayList<LeaderboardRows>();
 				
@@ -290,7 +290,7 @@ public class Main {
 		unaffiliateds.put("923747",  DivisionType.MAN.id());	//Luiz Henrique Alverga
 		unaffiliateds.put("1319593", DivisionType.MAN.id());	//Jucelino Silva
 		unaffiliateds.put("1314287", DivisionType.MAN.id());	//Francisco Rocha
-		unaffiliateds.put("901095",  DivisionType.MAN.id());	//Marcos Silva
+//		unaffiliateds.put("901095",  DivisionType.MAN.id());	//Marcos Silva
 		unaffiliateds.put("718899",  DivisionType.MAN.id());	//Paulo Xavier Filho
 		unaffiliateds.put("1278372", DivisionType.WOMAN.id());	//Raquel Farias
 		unaffiliateds.put("1310220", DivisionType.WOMAN.id());	//Wriellen Oliveira
