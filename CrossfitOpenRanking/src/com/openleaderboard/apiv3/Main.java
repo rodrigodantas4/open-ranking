@@ -292,6 +292,8 @@ public class Main {
 		unaffiliateds.put("1314287", DivisionType.MAN.id());	//Francisco Rocha
 //		unaffiliateds.put("901095",  DivisionType.MAN.id());	//Marcos Silva
 		unaffiliateds.put("718899",  DivisionType.MAN.id());	//Paulo Xavier Filho
+		unaffiliateds.put("984833",  DivisionType.MAN.id());	//Bruno Faustino
+		unaffiliateds.put("923790",  DivisionType.MAN.id());	//Leonardo Junior
 		unaffiliateds.put("1278372", DivisionType.WOMAN.id());	//Raquel Farias
 		unaffiliateds.put("1310220", DivisionType.WOMAN.id());	//Wriellen Oliveira
 		
