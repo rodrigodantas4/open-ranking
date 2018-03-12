@@ -178,7 +178,7 @@ public class Main {
 		recalculateWodScore(athletesList, WOD_ONE_INDEX);
 		recalculateWodScore(athletesList, WOD_TWO_INDEX);
 		recalculateWodScore(athletesList, WOD_TWO_A_INDEX);
-//		recalculateWodScore(athletesList, WOD_THREE_INDEX);
+		recalculateWodScore(athletesList, WOD_THREE_INDEX);
 //		recalculateWodScore(athletesList, WOD_FOUR_INDEX);
 //		recalculateWodScore(athletesList, WOD_FIVE_INDEX);
 		
