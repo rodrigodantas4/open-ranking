@@ -4,9 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -15,8 +13,8 @@ import java.util.Map;
 import org.apache.commons.io.IOUtils;
 
 import com.google.gson.Gson;
-import com.openleaderboard.apiv3.comparators.WodComparatorByScore;
 import com.openleaderboard.apiv3.comparators.LeaderboardRowComparator;
+import com.openleaderboard.apiv3.comparators.WodComparatorByScore;
 import com.openleaderboard.apiv3.json.Leaderboard;
 import com.openleaderboard.apiv3.json.LeaderboardRows;
 import com.openleaderboard.apiv3.json.Scores;
@@ -48,11 +46,12 @@ public class Main {
 		Map<String, String> affiliatesMap = loadAffiliates();
 		setUpRankingCategories();
 		
-		//"https://games.crossfit.com/competitions/api/v1/competitions/open/2018/leaderboards?affiliate=15671&division=2&&page=1"
-		//Parameters - :affiliateId, :divisionId, :pageNumber
+//		https://games.crossfit.com/competitions/api/v1/competitions/open/2018/leaderboards?affiliate=15671&division=2&&page=1
+//		Parameters - :affiliateId, :divisionId, :pageNumber
 		String urlBase = "https://games.crossfit.com/competitions/api/v1/competitions/open/2018/leaderboards?affiliate=:affiliateId&division=:divisionId&page=:pageNumber";
 
-//		String urlIndividual = "https://games.crossfit.com/competitions/api/v1/competitions/open/2018/leaderboards?&athlete=:athleteId";
+//		https://games.crossfit.com/competitions/api/v1/competitions/open/2018/leaderboards?division=:divisionId&athlete=:athleteId
+//		Parameters - :divisionId, :athleteId
 		String urlIndividual = "https://games.crossfit.com/competitions/api/v1/competitions/open/2018/leaderboards?division=:divisionId&athlete=:athleteId";
 		
 		//load athletes from affiliates
@@ -193,17 +192,6 @@ public class Main {
 		
 		w.write(gson.toJson(l, l.getClass()));
 		w.close();
-		
-//		printRanking(athletesList);
-	}
-	
-	private static void printRanking(List<LeaderboardRows> athletesList) {
-		System.out.println("----------------------------------------------------------");
-		System.out.println("Posição \tNome \tPontuação \t17.1 \t17.2 \t17.3 \t17.4 \t17.5 \tCategoria \tBox \tAtualizado em: " + new SimpleDateFormat("dd/MM/yy - HH:mm").format(Calendar.getInstance().getTime()));
-		
-		for (LeaderboardRows a : athletesList) {
-			System.out.println(a);
-		}
 	}
 	
 	private static void recalculateWodScore(List<LeaderboardRows> allAthletes, int wodIndex) {
@@ -280,7 +268,6 @@ public class Main {
 	}
 
 	private static Map<String, String> loadUnaffiliateds() {
-		// TODO carregar lista de nao afiliadas a partir de um arquivo
 		Map<String, String> unaffiliateds = new HashMap<String, String>();
 		
 		unaffiliateds.put("689593",  DivisionType.MAN.id());	//Aaron Damasceno
@@ -290,7 +277,6 @@ public class Main {
 		unaffiliateds.put("923747",  DivisionType.MAN.id());	//Luiz Henrique Alverga
 		unaffiliateds.put("1319593", DivisionType.MAN.id());	//Jucelino Silva
 		unaffiliateds.put("1314287", DivisionType.MAN.id());	//Francisco Rocha
-//		unaffiliateds.put("901095",  DivisionType.MAN.id());	//Marcos Silva
 		unaffiliateds.put("718899",  DivisionType.MAN.id());	//Paulo Xavier Filho
 		unaffiliateds.put("984833",  DivisionType.MAN.id());	//Bruno Faustino
 		unaffiliateds.put("923790",  DivisionType.MAN.id());	//Leonardo Junior
